@@ -20,7 +20,7 @@ if (localStorage.getItem("book_keeper")) {
     console.log(storedData);
 
     for (let i = 0; i < storedData.length; i++) {
-      createElements(storedData[i].title, storedData[i].url);
+      createElements(storedData[i].title, storedData[i].url, i);
     }
   }
 }
@@ -45,28 +45,36 @@ function submitData() {
   } else if (urlInput.value === "") {
     alert("please provide the url");
   } else {
-    createElements(titleInput.value, urlInput.value);
+    if (
+      storedData.find(
+        (e) => e.title === titleInput.value || e.url === urlInput.value,
+      )
+    ) {
+      alert("same detail already been saved");
+    } else {
+      createElements(titleInput.value, urlInput.value, storedData.length);
+      modal_popup.classList.add("inactive");
+      overlay.classList.add("inactive");
 
-    modal_popup.classList.add("inactive");
-    overlay.classList.add("inactive");
+      const tempObj = {
+        title: titleInput.value,
+        url: urlInput.value,
+      };
+      storedData.push(tempObj);
 
-    const tempObj = {
-      title: titleInput.value,
-      url: urlInput.value,
-    };
-    storedData.push(tempObj);
-
-    localStorage.setItem("book_keeper", JSON.stringify(storedData));
+      localStorage.setItem("book_keeper", JSON.stringify(storedData));
+    }
   }
 }
 
-function createElements(title, url) {
+function createElements(title, url, index) {
   const newBookmark = document.createElement("div");
   newBookmark.className = "bookmark_blocks";
   const anchorElement = document.createElement("a");
   anchorElement.href = url;
   anchorElement.textContent = title;
   const icon = document.createElement("i");
+  icon.setAttribute("data-value", index);
   icon.classList = "fas fa-times";
 
   newBookmark.appendChild(icon);
@@ -74,6 +82,24 @@ function createElements(title, url) {
   bodyContainer.appendChild(newBookmark);
 }
 
+function deleteBookmark(e) {
+  const parentElement = e.target.parentElement;
+  const currentTitle = parentElement.children[1].textContent;
+
+  console.log("rinnef");
+  const filteredItem = storedData.filter((e) => e.title != currentTitle);
+  console.log(filteredItem);
+
+  parentElement.remove();
+
+  localStorage.removeItem("book_keeper");
+  localStorage.setItem("book_keeper", JSON.stringify(filteredItem));
+}
+
 addBookmark.addEventListener("click", openModal);
 overlay.addEventListener("click", closeModal);
 submitButton.addEventListener("click", submitData);
+const deleteBtn = document.querySelectorAll(".fas");
+Array.from(deleteBtn).forEach((e) => {
+  e.addEventListener("click", (e) => deleteBookmark(e));
+});
