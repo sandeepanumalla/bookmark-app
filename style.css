@@ -1,0 +1,139 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
+:root {
+  --primary-color: #7c59b0;
+  --border-radius: 5px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background-color: var(--primary-color);
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%239C92AC' fill-opacity='0.8'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.big_container {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+
+  /* background-color: #dfdbe5;
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%239C92AC' fill-opacity='0.2'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); */
+}
+
+.header {
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookmark {
+  font-family: Nunito, "sans-serif";
+  font-size: xx-large;
+  color: white;
+  padding: 10px 15px;
+  background-color: rgba(31, 30, 30, 0.7);
+}
+
+.bookmark:hover {
+  cursor: pointer;
+}
+
+.bookmark:active {
+  transform: translateY(1.5px);
+  transition: transform;
+  transition-timing-function: ease-in;
+  transition-duration: 200ms;
+}
+
+.body_container {
+  /* height: 90%; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(31, 30, 30, 0.4);
+}
+
+.modal_popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  color: white;
+  z-index: 10;
+  font-family: Nunito, "sans-serif";
+  display: flex;
+  flex-direction: column;
+  padding: 30px 35px;
+  background-color: rgba(31, 30, 30, 0.7);
+  transform: translate(-50%, -50%);
+}
+
+.inactive {
+  transform: scale(0);
+}
+
+input {
+  width: 18rem;
+  padding: 3px 7px;
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.bookmark_blocks {
+  padding: 20px;
+  margin: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgba(31, 30, 30, 0.4);
+}
+
+.bookmark_blocks a {
+  color: white;
+
+  text-decoration: none;
+}
+
+.bookmark_blocks i {
+  color: white;
+  padding-right: 10%;
+  align-self: flex-end;
+  position: relative;
+  bottom: 40%;
+  left: 20%;
+}
+
+.bookmark_blocks:hover {
+  cursor: pointer;
+  background-color: rgba(31, 30, 30, 0.7);
+}
+
+.submit_button {
+  margin-top: 10px;
+  padding: 10px;
+  outline: none;
+  font-size: larger;
+  border: none;
+  border-radius: 5px;
+}
+
+.submit_button:active {
+  transform: translateY(1.5px);
+}
