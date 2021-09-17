@@ -6,6 +6,8 @@ const submitButton = document.querySelector(".submit_button");
 const overlay = document.querySelector(".overlay");
 const titleInput = document.querySelector("#title_input");
 const urlInput = document.querySelector("#url_input");
+const closeBtn = document.querySelector(".modal_header").children[1];
+
 let deleteBtn;
 
 let storedData = [];
@@ -107,4 +109,5 @@ function deleteBookmark(e) {
 
 addBookmark.addEventListener("click", openModal);
 overlay.addEventListener("click", closeModal);
+closeBtn.addEventListener("click", closeModal);
 submitButton.addEventListener("click", submitData);
