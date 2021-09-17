@@ -14,19 +14,21 @@ let storedData = [];
 
 let sdfsdf = [{}];
 
-if (localStorage.getItem("book_keeper")) {
-  storedData = JSON.parse(localStorage.getItem("book_keeper"));
+function load() {
+  if (localStorage.getItem("book_keeper")) {
+    storedData = JSON.parse(localStorage.getItem("book_keeper"));
 
-  //show UI data
+    if (storedData.length != 0) {
+      console.log(storedData);
 
-  if (storedData.length != 0) {
-    console.log(storedData);
-
-    for (let i = 0; i < storedData.length; i++) {
-      createElements(storedData[i].title, storedData[i].url, i);
+      for (let i = 0; i < storedData.length; i++) {
+        createElements(storedData[i].title, storedData[i].url, i);
+      }
     }
   }
 }
+load();
+closeButtons();
 
 function openModal() {
   overlay.classList.remove("inactive");
@@ -56,6 +58,10 @@ function submitData() {
       )
     ) {
       alert("same detail already been saved");
+    } else if (titleInput.value === urlInput.value) {
+      alert(" title and url cannot be same");
+    } else if (!urlInput.value.includes(".")) {
+      alert("invalid url provided");
     } else {
       createElements(titleInput.value, urlInput.value, storedData.length);
       modal_popup.classList.add("inactive");
@@ -68,13 +74,17 @@ function submitData() {
       storedData.push(tempObj);
 
       localStorage.setItem("book_keeper", JSON.stringify(storedData));
-      deleteBtn = document.querySelectorAll(".fas");
-
-      Array.from(deleteBtn).forEach((e) => {
-        e.addEventListener("click", (e) => deleteBookmark(e));
-      });
+      closeButtons();
     }
   }
+}
+
+function closeButtons() {
+  deleteBtn = document.querySelectorAll(".fas");
+
+  Array.from(deleteBtn).forEach((e) => {
+    e.addEventListener("click", (e) => deleteBookmark(e));
+  });
 }
 
 function createElements(title, url, index) {
@@ -96,15 +106,20 @@ function deleteBookmark(e) {
   const parentElement = e.target.parentElement;
 
   const filteredItem = storedData.filter((e, i) => {
-    i == parentElement.children[0].getAttribute("data-value");
-    console.log(i);
+    return i != parseInt(parentElement.children[0].getAttribute("data-value"));
   });
-  console.log(filteredItem);
 
   parentElement.remove();
 
   localStorage.removeItem("book_keeper");
-  localStorage.setItem("book_keeper", JSON.stringify(filteredItem));
+  console.log(JSON.stringify(filteredItem));
+  if (filteredItem.length == 0) {
+    return;
+  } else {
+    localStorage.setItem("book_keeper", JSON.stringify(filteredItem));
+  }
+
+  closeButtons();
 }
 
 addBookmark.addEventListener("click", openModal);
