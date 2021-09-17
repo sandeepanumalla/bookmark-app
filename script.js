@@ -6,6 +6,7 @@ const submitButton = document.querySelector(".submit_button");
 const overlay = document.querySelector(".overlay");
 const titleInput = document.querySelector("#title_input");
 const urlInput = document.querySelector("#url_input");
+let deleteBtn;
 
 let storedData = [];
 
@@ -36,6 +37,8 @@ function closeModal() {
   console.log("hello");
 }
 
+function isValidAddress() {}
+
 function submitData() {
   console.log("your title input is ", titleInput.value);
   console.log("your url input is ", urlInput.value);
@@ -63,6 +66,11 @@ function submitData() {
       storedData.push(tempObj);
 
       localStorage.setItem("book_keeper", JSON.stringify(storedData));
+      deleteBtn = document.querySelectorAll(".fas");
+
+      Array.from(deleteBtn).forEach((e) => {
+        e.addEventListener("click", (e) => deleteBookmark(e));
+      });
     }
   }
 }
@@ -84,10 +92,11 @@ function createElements(title, url, index) {
 
 function deleteBookmark(e) {
   const parentElement = e.target.parentElement;
-  const currentTitle = parentElement.children[1].textContent;
 
-  console.log("rinnef");
-  const filteredItem = storedData.filter((e) => e.title != currentTitle);
+  const filteredItem = storedData.filter((e, i) => {
+    i == parentElement.children[0].getAttribute("data-value");
+    console.log(i);
+  });
   console.log(filteredItem);
 
   parentElement.remove();
@@ -99,7 +108,3 @@ function deleteBookmark(e) {
 addBookmark.addEventListener("click", openModal);
 overlay.addEventListener("click", closeModal);
 submitButton.addEventListener("click", submitData);
-const deleteBtn = document.querySelectorAll(".fas");
-Array.from(deleteBtn).forEach((e) => {
-  e.addEventListener("click", (e) => deleteBookmark(e));
-});
